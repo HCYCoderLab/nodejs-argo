@@ -48,9 +48,9 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/${{ LOWER_OWNER }}/docker-tunnel:20251102
+            ghcr.io/${{ env.LOWER_OWNER }}/docker-tunnel:20251102
           labels: |
-            org.opencontainers.image.source=https://github.com/${{ LOWER_REPO }}
+            org.opencontainers.image.source=https://github.com/${{ env.LOWER_REPO }}
             org.opencontainers.image.description=HTTP Server
             org.opencontainers.image.licenses=MIT
           cache-from: type=gha

@@ -19,6 +19,15 @@ jobs:
       packages: write
 
     steps:
+      - name: Set up build variables
+        run: |
+          # 转换所有需要小写的部分
+          LOWER_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          LOWER_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          # 设置环境变量
+          echo "LOWER_OWNER=$LOWER_OWNER" >> $GITHUB_ENV
+          echo "LOWER_REPO=$LOWER_REPO" >> $GITHUB_ENV
+          
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -39,9 +48,9 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/${{ github.repository_owner }}/docker-tunnel:20251102
+            ghcr.io/${{ LOWER_OWNER }}/docker-tunnel:20251102
           labels: |
-            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.source=https://github.com/${{ LOWER_REPO }}
             org.opencontainers.image.description=HTTP Server
             org.opencontainers.image.licenses=MIT
           cache-from: type=gha
